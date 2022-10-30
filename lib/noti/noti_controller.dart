@@ -103,7 +103,7 @@ class NotificationController {
 
     await AwesomeNotifications().createNotification(
         content: NotificationContent(
-            id: -1, // -1 is replaced by a random number
+            id: id, // -1 is replaced by a random number
             channelKey: 'timer_channel',
             title: name,
             body:
@@ -130,7 +130,7 @@ class NotificationController {
     await AwesomeNotifications().resetGlobalBadge();
   }
 
-  static Future<void> cancelNotifications() async {
-    await AwesomeNotifications().cancelAll();
+  static Future<void> cancelNotification(int id) async {
+    await AwesomeNotifications().cancel(id);
   }
 }

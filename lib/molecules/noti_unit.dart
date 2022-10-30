@@ -99,17 +99,17 @@ class _NotifyUnitState extends State<NotifyUnit> {
               onPressed: (() {
                 if (end == null) {
                   NotificationController.scheduleNewNotification(widget.id, name, seconds)
-                  .then((_) {
-                    setState(() {
-                      end = DateFormat.Hms("ko_KR").format(DateTime.now().add(Duration(seconds: seconds)));
-                    });
+                  .then((_) async {
+                    final prefs = await SharedPreferences.getInstance();
+                    prefs.setString("end${widget.id}", DateFormat.Hms("ko_KR").format(DateTime.now().add(Duration(seconds: seconds))));
+                    loadAlarm(widget.id);
                   });
                 } else {
-                  NotificationController.cancelNotifications()
-                  .then((_) {
-                    setState(() {
-                      end = null;
-                    });
+                  NotificationController.cancelNotification(widget.id)
+                  .then((_) async {
+                    final prefs = await SharedPreferences.getInstance();
+                    prefs.remove("end${widget.id}");
+                    loadAlarm(widget.id);
                   });
                 }
               }),
