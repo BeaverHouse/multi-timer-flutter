@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_timer_flutter/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationController {
 
@@ -20,6 +21,9 @@ class NotificationController {
   @pragma("vm:entry-point")
   static Future <void> onDismissActionReceivedMethod(ReceivedAction receivedAction) async {
     // Your code goes here
+    int id = receivedAction.id ?? 0;    
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("end$id");
   }
 
   /// Use this method to detect when the user taps on a notification or action button

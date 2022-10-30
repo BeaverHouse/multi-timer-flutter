@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_timer_flutter/atoms/upload_dialog.dart';
@@ -103,6 +105,10 @@ class _NotifyUnitState extends State<NotifyUnit> {
                     final prefs = await SharedPreferences.getInstance();
                     prefs.setString("end${widget.id}", DateFormat.Hms("ko_KR").format(DateTime.now().add(Duration(seconds: seconds))));
                     loadAlarm(widget.id);
+                    Timer(Duration(seconds: seconds), () {
+                      prefs.remove("end${widget.id}");
+                      loadAlarm(widget.id);
+                    });
                   });
                 } else {
                   NotificationController.cancelNotification(widget.id)
