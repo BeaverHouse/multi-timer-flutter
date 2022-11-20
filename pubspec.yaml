@@ -97,4 +97,4 @@ flutter:
 
 flutter_icons:
   android: "launcher_icon"
-  image_path: "assets/images/alarm.png"
+  image_path: "assets/images/launcher_icon.png"

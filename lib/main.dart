@@ -14,7 +14,6 @@ void main() {
           channelKey: 'timer_channel',
           channelName: 'Multi Timer',
           channelDescription: 'Multi Timer 알림',
-          defaultColor: const Color(0xFF9D50DD),
           ledColor: Colors.white,
           criticalAlerts: true,
           importance: NotificationImportance.Max

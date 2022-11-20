@@ -112,7 +112,7 @@ class NotificationController {
             title: name,
             body:
                 "알림! : $name",
-            largeIcon: 'asset://assets/images/alarm.png',
+            largeIcon: 'asset://assets/images/launcher_icon.png',
             notificationLayout: NotificationLayout.BigPicture,
             criticalAlert: true,
             category: NotificationCategory.Alarm,

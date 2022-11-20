@@ -31,10 +31,17 @@ class _NotifyUnitState extends State<NotifyUnit> {
   // Loading counter value on start
   void loadAlarm(int id) async {
     final prefs = await SharedPreferences.getInstance();
+    String? dateString = prefs.getString("end$id");
+    DateTime endDate = dateString != null ? DateTime.parse(dateString) : DateTime.now();
     setState(() {
       name = (prefs.getString("name$id") ?? "알람 이름$id");
       seconds = (prefs.getInt("seconds$id") ?? 600);
-      end = prefs.getString("end$id");
+      if(endDate.isAfter(DateTime.now())) {
+        end = dateString;
+      } else {
+        end = null;
+        prefs.remove("end$id");
+      }
     });
   }
 
@@ -87,7 +94,7 @@ class _NotifyUnitState extends State<NotifyUnit> {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    end ?? "$hours시간 $mins분 $secs초", 
+                    end != null ? DateFormat.Hms("ko_KR").format(DateTime.parse(end!)) : "$hours시간 $mins분 $secs초", 
                     style: TextStyle(
                       fontSize: 24, 
                       fontWeight: FontWeight.w600, 
@@ -103,7 +110,7 @@ class _NotifyUnitState extends State<NotifyUnit> {
                   NotificationController.scheduleNewNotification(widget.id, name, seconds)
                   .then((_) async {
                     final prefs = await SharedPreferences.getInstance();
-                    prefs.setString("end${widget.id}", DateFormat.Hms("ko_KR").format(DateTime.now().add(Duration(seconds: seconds))));
+                    prefs.setString("end${widget.id}", DateTime.now().add(Duration(seconds: seconds)).toString());
                     loadAlarm(widget.id);
                     Timer(Duration(seconds: seconds), () {
                       prefs.remove("end${widget.id}");
