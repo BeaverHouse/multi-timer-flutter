@@ -7,7 +7,7 @@ import 'package:multi_timer_flutter/page/home.dart';
 // https://pub.dev/packages/awesome_notifications#-how-to-show-local-notifications
 void main() {
   AwesomeNotifications().initialize(
-    'resource://drawable/launcher_icon',
+    null,
     [
       NotificationChannel(
           channelGroupKey: 'timer_channel_group',
